@@ -12,6 +12,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --background-image-accent-gradient: linear-gradient(135deg, #DE6262 0%, #FFB88C 100%);
+  --color-accent: #FFB88C;
+  --color-touch: #DE6262;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
