@@ -1,0 +1,121 @@
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const { v4: uuidv4 } = require('uuid')
+
+const { createUser, getUserByEmail, getUserById } = require('../models/userModel')
+require('dotenv').config()
+
+const signup = async (req, res) => {
+    const { name, email, password } = req.body
+
+    try {
+        const existingUser = await getUserByEmail(email)
+        if (existingUser) return res.status(400).json({ 
+            success: false,
+            emailError: 'Email already in use' 
+        })
+
+        const uuid = uuidv4()
+        const hashedPassword = await bcrypt.hash(password, 10)
+        const newUser = await createUser(uuid, name, email, hashedPassword)
+        const token = jwt.sign({ id: newUser.uid }, process.env.JWT_SECRET, { expiresIn: '7d' })
+
+        res.cookie('auth_token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+        
+        res.status(201).json({ 
+            success: true,
+            message: 'User created', 
+            user: newUser 
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Server error: " + err.message
+        })
+    }
+}
+
+const login = async (req, res) => {
+    const { email, password } = req.body
+
+    try {
+        const user = await getUserByEmail(email);
+        if (!user) return res.status(400).json({ 
+            success: false,
+            emailError: 'Email not found' 
+        })
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ 
+            success: false,
+            passwordError: 'Incorrect password' 
+        })
+
+        const token = jwt.sign({ id: user.uid }, process.env.JWT_SECRET, { expiresIn: '7d' })
+
+        res.cookie('auth_token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+
+        res.json({ 
+            success: true,
+            message: 'Login successful' ,
+            user
+        })
+    } catch (err) {
+        res.status(500).json({ 
+            success: false,
+            error: 'Something went wrong' 
+        })
+    }
+}
+
+const getAuthUser = async (req, res) => {
+    try {
+        const user = await getUserById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+
+        const { password, ...safeUser } = user;
+
+        res.json({ success: true, user: safeUser });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+}
+
+const logout = async (req, res) => {
+    try {
+        res.clearCookie('auth_token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None'
+        })
+
+        res.json({
+            success: true, 
+            message: "Logged out"
+        })
+    } catch(err) {
+        res.status(500).json({ 
+            success: false,
+            error: err.message 
+        })
+    }
+}
+
+module.exports = {
+    login,
+    signup,
+    getAuthUser,
+    logout
+}
