@@ -103,7 +103,7 @@ export default function SignUp() {
                     </div>
                 </div>
                     
-                <div className={`rounded-lg overflow-hidden ${error.email ? 'bg-red-100' : 'bg-light'} focus-input-group`}>   
+                <div className={`rounded-lg overflow-hidden ${error.email ? 'bg-red-100' : 'bg-light'} focus-input-group border border-gray-300`}>   
                     {error.email ? 
                         <label htmlFor="email" className="block cursor-text px-4 pt-2 text-xs font-medium text-red-500">
                             {capitalize(error.email)}
@@ -116,7 +116,7 @@ export default function SignUp() {
                     <input value={credentials.email} onChange={e => handleChange(e)} type="email" name="email" id="email" placeholder="Enter your email" 
                         className={`w-full px-4 pb-2 outline-none no-focus text-base autofill-${error.email ? 'error' : 'light'} bg-transparent ${error.email ? 'text-red-500' : 'text-gray-700'}`}/>
                 </div>
-                <div className={`rounded-lg overflow-hidden ${error.password ? 'bg-red-100' : 'bg-light'} focus-input-group`}>   
+                <div className={`rounded-lg overflow-hidden ${error.password ? 'bg-red-100' : 'bg-light'} focus-input-group border border-gray-300`}>   
                     {error.password ? 
                     <label htmlFor="password" className="block cursor-text px-4 pt-2 text-xs font-medium text-red-500">
                         {capitalize(error.password)}
@@ -129,7 +129,8 @@ export default function SignUp() {
                 <input value={credentials.password} onChange={e => handleChange(e)} type="password" name="password" id="password" placeholder="Enter your password" 
                     className={`w-full px-4 pb-2 outline-none no-focus text-base bg-transparent ${error.password ? 'text-red-500' : 'text-gray-700'}`}/>
                 </div>
-                <button disabled={signUpButton.disabled} type="submit" className="cursor-pointer bg-accent-gradient mt-4 text-white py-3 rounded-lg font-medium hover:brightness-95 disabled:opacity-50">
+                <Link href={'forgot-password'} className="text-sm hover:underline text-right text-gray-500">Forgot passowrd</Link>
+                <button disabled={signUpButton.disabled} type="submit" className="cursor-pointer bg-accent-gradient text-white py-3 rounded-lg font-medium hover:brightness-95 disabled:opacity-50">
                     {signUpButton.innerText}
                 </button> 
             </form>
