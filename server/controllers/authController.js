@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { v4: uuidv4 } = require('uuid')
 
-const { createUser, getUserByEmail, getUserById } = require('../models/userModel')
+const { createUser, getUserByEmail, getUserById, saveToken, generateResetLink, sendEmail, validateToken, updatePassword } = require('../models/userModel')
 require('dotenv').config()
 
 const signup = async (req, res) => {
@@ -113,9 +113,73 @@ const logout = async (req, res) => {
     }
 }
 
+const searchUserByEmail = async (req, res) => {
+    try {
+        const { email } = req.body
+
+        const user = await getUserByEmail(email)
+
+        if(!user) {
+            return res.status(404).json({
+                success: false,
+                error: "User not found"
+            })
+        }
+
+        const token = uuidv4()
+        const hashedToken = await bcrypt.hash(token, 10)
+
+        console.log('saving token')
+        await saveToken({ token: hashedToken, expires: Date.now() + 3600000, uid: user.uid })
+        console.log('generating link')
+        const resetLink = await generateResetLink({ token, uid: user.uid })
+        await sendEmail({ email, resetLink })
+
+        res.json({
+            success: true,
+            user
+        })
+    } catch (err) {
+        res.status(500).json({ 
+            success: false,
+            error: err.message 
+        })
+    }
+}
+
+const resetPassword = async (req, res) => {
+    try {
+        const { uid, token, newPassword } = req.body
+
+        const isValid = await validateToken(uid, token)
+
+        if(!isValid) {
+            return res.status(403).json({
+                success: false,
+                error: "Something is wrong. Token migght be expired or invalid."
+            })
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10)
+        await updatePassword({ uid, hashedPassword })
+
+        res.json({
+            success: true,
+            message: "Password was succesfully updated"
+        })
+    } catch (err) {
+        res.status(500).json({ 
+            success: false,
+            error: err.message 
+        })
+    }
+}
+
 module.exports = {
     login,
     signup,
     getAuthUser,
-    logout
+    logout,
+    searchUserByEmail,
+    resetPassword
 }
