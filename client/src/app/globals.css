@@ -7,15 +7,16 @@
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-foreground: var(--foreground);  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @theme {
-  --background-image-accent-gradient: linear-gradient(135deg, #DE6262 0%, #FFB88C 100%);
-  --color-accent: #FFB88C;
-  --color-touch: #DE6262;
+  --background-image-accent-gradient: linear-gradient(135deg, #DE6262 0%, #FFB88C 100%);  
+  --background-image-accent-gradient-1: linear-gradient(135deg, #DE6262 0%, #FFB88C 100%, 50%);  
+  --color-accent: #FFB88C;  
+  --color-touch: #DE6262; 
 }
 
 @media (prefers-color-scheme: dark) {
