@@ -1,12 +1,11 @@
-import Landing from "@/components/landing"
-import Link from 'next/link'
+import Homepage from "@/components/Homepage"
 
 const Home = () => {
 
   return (
     
     <div className=''>
-      <Landing></Landing>
+      <Homepage />
     </div>
   )
 }
