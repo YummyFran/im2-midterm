@@ -1,8 +1,18 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@/auth";
+import { logOut } from "@/app/actions/auth";
+import LandingClient from "./LandingClient";
+import { cookies } from "next/headers";
 
-const landing = () => {
+const landing = async () => {
+  const cookie = await cookies()
+  const session = await auth();
+  const token = cookie.get("auth_token")?.value;
+  const isAuth = Boolean(session) || Boolean(token);
+  
+  if (isAuth) return <LandingClient logOut={logOut} isAuth={isAuth} token={token} />;
   return (
     <>
       <div className="bg-accent-gradient w-full h-screen flex flex-col relative">

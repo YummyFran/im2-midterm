@@ -1,5 +1,6 @@
 "use client"
 
+import GoogleSigninBtn from "@/components/GoogleSigninBtn";
 import { login } from "@/lib/authService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -80,11 +81,7 @@ export default function SignUp() {
                 <h1 className="text-2xl font-bold text-left pb-4 text-gray-800">Log in to Hinode</h1>
 
                 <div className="flex flex-col space-y-2">
-                    <button type="button" onClick={() => console.log("Sign in with google is under development.")}
-                        className="flex items-center justify-center w-full px-4 py-2 text-gray-700 bg-white border rounded-lg hover:bg-gray-100">
-                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5 mr-2" />
-                        Continue with Google
-                    </button>
+                    <GoogleSigninBtn />
                     <button type="button" onClick={() => console.log("Sign in with Github is under development.")}
                         className="flex items-center justify-center w-full px-4 py-2 text-gray-700 bg-white border rounded-lg hover:bg-gray-100">
                         <svg className="w-5 h-5 text-gray-900 mr-2" fill="currentColor" viewBox="0 0 24 24">
