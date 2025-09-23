@@ -95,6 +95,7 @@ const getAuthUser = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
+        console.log('logging out')
         res.clearCookie('auth_token', {
             httpOnly: true,
             secure: true,

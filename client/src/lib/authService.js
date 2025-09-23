@@ -71,3 +71,17 @@ export const resetPassword = async ({ uid, token, newPassword }) => {
         return [null, err]
     }
 }
+
+export const logOutCookie = async () => {
+    try {
+        const res = await fetch(`${API_URL}/logout`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        const data = await res.json()
+        console.log(data)
+    } catch (err) {
+        console.log(err.message)
+        return [null, err]
+    }
+}
