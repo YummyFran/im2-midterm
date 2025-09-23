@@ -38,6 +38,24 @@ export const login = async (credentials) => {
     }
 }
 
+export const getAuthUSer = async (token) => {
+    try {
+        const res = await fetch(`${API_URL}/me`, {
+            method: "GET",
+            headers: {
+                "Cookie": `auth_token=${token}`
+            },
+            credentials: 'include'
+        })
+        const data = await res.json()
+
+        return [data, null]
+    } catch (err) {
+        console.log(err.message)
+        return [null, err]
+    }
+}
+
 export const searchAccount = async (email) => {
     try {
         const res = await fetch(`${API_URL}/search`, {

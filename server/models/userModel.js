@@ -65,7 +65,7 @@ const sendEmail = async ({ email, resetLink }) => {
   });
   const mailOptions = {
     from: "yumpalomares@gmail.com",
-    to: "yumpalomares@gmail.com",
+    to: email,
     subject: "Reset Your Password - BlogApp",
     html: `
     <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">

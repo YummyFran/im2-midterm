@@ -29,7 +29,7 @@ export async function middleware(request) {
 
 export const config = {
     matcher: [
-        // ...protectedRoutes.map(route => `${route}/:path*`),
-        // ...guestRoutes
+        ...protectedRoutes.map(route => `${route}/:path*`),
+        ...guestRoutes
     ]
 };

@@ -9,7 +9,7 @@ router.post("/login", login)
 
 router.get('/me', authenticate, getAuthUser)
 router.post('/logout', authenticate, logout)
-router.post('/search', authenticate, searchUserByEmail)
-router.post('/reset-password', authenticate, resetPassword)
+router.post('/search', searchUserByEmail)
+router.post('/reset-password', resetPassword)
 
 module.exports = router;

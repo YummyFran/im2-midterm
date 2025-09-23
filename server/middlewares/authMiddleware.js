@@ -4,6 +4,7 @@ require('dotenv').config();
 const authenticate = (req, res, next) => {
     const token = req.cookies.auth_token
 
+    console.log(token)
     if (!token) {
         return res.status(401).json({
             success: false,

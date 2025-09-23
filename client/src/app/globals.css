@@ -13,9 +13,9 @@
 }
 
 @theme {
-  --background-image-accent-gradient: linear-gradient(135deg, #DE6262 0%, #FFB88C 100%);  
-  --background-image-accent-gradient-1: linear-gradient(135deg, #DE6262 0%, #FFB88C 100%, 50%);  
-  --color-accent: #FFB88C;  
+  --background-image-accent-gradient: linear-gradient(135deg, #67B26F 0%, #4ca2cd 100%);  
+  --background-image-accent-gradient-1: linear-gradient(135deg, #67B26F 0%, #4ca2cd 100%, 50%);  
+  --color-accent: #4ca2cd;  
   --color-touch: #DE6262; 
 }
 

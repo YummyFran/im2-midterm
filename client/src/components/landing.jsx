@@ -1,23 +1,16 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { auth } from "@/auth";
-import { logOut } from "@/app/actions/auth";
-import LandingClient from "./LandingClient";
-import { cookies } from "next/headers";
+
 
 const landing = async () => {
-  const cookie = await cookies()
-  const session = await auth();
-  const token = cookie.get("auth_token")?.value;
-  const isAuth = Boolean(session) || Boolean(token);
-  
-  if (isAuth) return <LandingClient logOut={logOut} isAuth={isAuth} token={token} />;
+
+  // if (isAuth) return <LandingClient logOut={logOut} isAuth={isAuth} token={token} />;
   return (
     <>
       <div className="bg-accent-gradient w-full h-screen flex flex-col relative">
         <header className=" flex items-center h-16 w-full px-16">
-          <h1 className="font-bold text-white text-xl">BlogPost</h1>
+          <h1 className="font-extrabold text-white text-2xl">Inkspire</h1>
           <Link
             href="/login"
             className=" ml-auto  text-white border-2 border-white py-2 px-6 rounded-md "
@@ -46,7 +39,7 @@ const landing = async () => {
               width={500}
               height={500}
               alt="Picture"
-              className="h-full bg-white w-full"
+              className="h-full bg-white w-full object-cover object-center"
             ></Image>
           </div>
         </div>

@@ -14,6 +14,7 @@ const page = () => {
     disabled: false,
     innerText: 'Search'
   })
+  const [isFound, setIsFound] = useState(false)
   const router = useRouter()
 
   const handleSubmit = async (e) => {
@@ -34,9 +35,15 @@ const page = () => {
     }
 
     setSearchButton(prev => ({ ...prev, disabled: false, innerText: "Search"}))
-    console.log(data)
-    // router.push('/')
+    setIsFound(true)
   }
+
+  if(isFound) return (
+    <div className="flex h-screen justify-center items-center flex-col gap-5">
+      <h2 className="text-3xl font-extrabold">We've sent an email to <span className="text-accent">{email}</span></h2>
+      <p>We've sent a password reset link to your email. Please check your email and follow the instructions to reset your password.</p>
+    </div>
+  )
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">

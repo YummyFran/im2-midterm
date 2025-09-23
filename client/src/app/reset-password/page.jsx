@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { resetPassword } from "@/lib/authService";
+import Link from 'next/link'
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function ResetPasswordPage() {
     disabled: false,
     innerText: "Reset Password"
   })
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -51,9 +53,15 @@ export default function ResetPasswordPage() {
     }
 
     setResetButton(prev => ({ ...prev, disabled: false, innerText: "Reset Password"}))
-    console.log(data)
+    
   }
   
+  if(isSuccess) return (
+    <div className="flex h-screen justify-center items-center flex-col gap-5">
+      <h2 className="text-3xl font-extrabold">We've changed your password</h2>
+      <Link href="/login" className="bg-accent-gradient py-2 px-4 text-white rounded-lg">Back to Login</Link>
+    </div>
+  )
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="flex flex-col gap-2 bg-white p-5 shadow-xl rounded-lg w-100">
