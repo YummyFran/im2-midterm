@@ -53,7 +53,7 @@ export default function ResetPasswordPage() {
     }
 
     setResetButton(prev => ({ ...prev, disabled: false, innerText: "Reset Password"}))
-    
+    setIsSuccess(true)
   }
   
   if(isSuccess) return (

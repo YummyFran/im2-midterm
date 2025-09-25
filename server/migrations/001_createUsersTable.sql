@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS users (
     uid VARCHAR(36) PRIMARY KEY, 
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255),
     reset_token VARCHAR(255),
     reset_token_expires DATETIME,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

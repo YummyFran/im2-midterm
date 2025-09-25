@@ -103,3 +103,37 @@ export const logOutCookie = async () => {
         return [null, err]
     }
 }
+
+export const saveUserDetails = async (credentials, email) => {
+    try {
+        const res = await fetch(`${API_URL}/save-user`, {
+            method: "POST",
+            credentials: 'include',
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({ ...credentials, email })
+        })
+        const data = await res.json()
+
+        return [data, null]
+    } catch (err) {
+        console.log(err.message)
+        return [null, err]
+    }
+}
+
+export const getUserByEmail = async (email) => {
+    try {
+        const res = await fetch(`${API_URL}/get-user-by-email`, {
+            method: "POST",
+            credentials: 'include',
+            headers: { "Content-Type": 'application/json'},
+            body: JSON.stringify({ email })
+        })
+        const data = await res.json()
+
+        return [data, null]
+    } catch (err) {
+        console.log(err.message)
+        return [null, err]
+    }
+}

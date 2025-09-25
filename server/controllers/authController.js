@@ -176,11 +176,57 @@ const resetPassword = async (req, res) => {
     }
 }
 
+const saveUser = async (req, res) => {
+    const { name, email } = req.body
+    try {
+        const uuid = uuidv4()
+        const newUser = await createUser(uuid, name, email)
+        const token = jwt.sign({ id: newUser.uid }, process.env.JWT_SECRET, { expiresIn: '7d' })
+
+        res.cookie('auth_token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+        
+        res.status(201).json({ 
+            success: true,
+            message: 'User created', 
+            user: newUser 
+        })
+    } catch (err) {
+        res.status(500).json({ 
+            success: false,
+            error: err.message 
+        })
+    }
+}
+
+const getUserByEmailController = async (req, res) => {
+    const { email } = req.body
+    try {
+        const user = await getUserByEmail(email)
+
+        if(!user) {
+            return res.json({ success: false, message: "No User Found" })
+        }
+        res.json({ success: true, user })
+    } catch (err) {
+        res.status(500).json({ 
+            success: false,
+            error: err.message 
+        })
+    }
+}
+
 module.exports = {
     login,
     signup,
     getAuthUser,
     logout,
     searchUserByEmail,
-    resetPassword
+    resetPassword,
+    saveUser,
+    getUserByEmailController
 }

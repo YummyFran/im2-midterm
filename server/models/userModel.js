@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 const bcrypt = require('bcryptjs')
 require("dotenv").config();
 
-const createUser = async (uuid, name, email, passwordHash) => {
+const createUser = async (uuid, name, email, passwordHash = "") => {
   const result = await db.query(
     "INSERT INTO users (uid, name, email, password) VALUES (?, ?, ?, ?)",
     [uuid, name, email, passwordHash]

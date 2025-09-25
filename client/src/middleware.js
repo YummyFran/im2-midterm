@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 
-const protectedRoutes = [];
+const protectedRoutes = ['/onboarding'];
 const guestRoutes = ['/login', '/signup', '/reset-password', '/forgot-password']
 
 export async function middleware(request) {
